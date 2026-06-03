@@ -1,9 +1,36 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Página-1" id="8MuiLY4cqOf-zbVoz6CE">
-    <mxGraphModel>
+    <mxGraphModel dx="782" dy="417" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="ZFpAyXIvWhypjhz6FR6J-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="ALUNO:&lt;div&gt;-----------------------------&lt;br&gt;&lt;div&gt;-ID ALUNO&lt;/div&gt;&lt;div&gt;-NOME ALUNO&lt;/div&gt;&lt;div&gt;-DATA DE NASC.&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="120" x="80" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="ZFpAyXIvWhypjhz6FR6J-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="MATRICULA:&lt;div&gt;-----------------------------&lt;/div&gt;&lt;div&gt;-ID MATRICULA&lt;/div&gt;&lt;div&gt;-ID ALUNO&lt;/div&gt;&lt;div&gt;-ID CURSO&lt;/div&gt;&lt;div&gt;-DATA MATRICULA&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="120" x="310" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="ZFpAyXIvWhypjhz6FR6J-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="CURSO:&lt;div&gt;-----------------------------&lt;/div&gt;&lt;div&gt;-ID CURSO&lt;/div&gt;&lt;div&gt;-NOME DO CURSO&lt;/div&gt;&lt;div&gt;-CARGA HORARIA&lt;/div&gt;" vertex="1">
+          <mxGeometry height="75" width="120" x="520" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="ZFpAyXIvWhypjhz6FR6J-7" edge="1" parent="1" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="430" y="260" as="sourcePoint" />
+            <mxPoint x="510" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZFpAyXIvWhypjhz6FR6J-8" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=-50;" value="N:1" vertex="1">
+          <mxGeometry height="40" width="50" x="430" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="ZFpAyXIvWhypjhz6FR6J-9" edge="1" parent="1" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="180" y="180" as="sourcePoint" />
+            <mxPoint x="300" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZFpAyXIvWhypjhz6FR6J-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=30;" value="1:N" vertex="1">
+          <mxGeometry height="30" width="60" x="220" y="200" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
