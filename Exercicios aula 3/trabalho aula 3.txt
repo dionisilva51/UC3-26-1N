@@ -1,0 +1,169 @@
+
+
+
+ESCOLA:
+
+CREATE TABLE professores(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	email VARCHAR(150) NOT NULL UNIQUE
+);
+
+CREATE TABLE alunos(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	email VARCHAR(150) NOT NULL UNIQUE
+);
+
+CREATE TABLE turmas(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE disciplinas(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	id_turma INT NOT NULL,
+	CONSTRAINT fk_disciplinas_turmas
+	FOREIGN KEY (id_turma)
+	REFERENCES turmas(id)
+	
+);
+
+
+CREATE TABLE aulas (
+	id SERIAL PRIMARY KEY,
+	id_professor INT NOT NULL,
+	CONSTRAINT fk_professor_aulas
+	FOREIGN KEY (id_professor)
+	REFERENCES professores(id),
+	id_disciplina INT NOT NULL,
+	CONSTRAINT fk_disciplinas_aulas
+	FOREIGN KEY (id_disciplina)
+	REFERENCES disciplinas(id)
+	
+);
+
+CREATE TABLE matriculas(
+	id SERIAL PRIMARY KEY,
+	id_aluno INT NOT NULL,
+	CONSTRAINT fk_alunos_matriculas
+	FOREIGN KEY (id_aluno)
+	REFERENCES alunos(id),
+	id_turma INT NOT NULL,
+	CONSTRAINT fk_turmas_matriculas
+	FOREIGN KEY (id_turma)
+	REFERENCES turmas(id)
+);
+
+
+
+LOCADORA:
+
+CREATE TABLE filmes(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	genero VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE clientes(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	cpf VARCHAR(11) NOT NULL UNIQUE,
+	telefone VARCHAR (15) NOT NULL
+);
+
+CREATE TABLE locacao(
+	id SERIAL PRIMARY KEY,
+	id_cliente INT NOT NULL,
+	CONSTRAINT fk_cliente_locacao
+	FOREIGN KEY (id_cliente)
+	REFERENCES clientes(id),
+	id_filme INT NOT NULL,
+	CONSTRAINT fk_filme_locacao
+	FOREIGN KEY (id_filme)
+	REFERENCES filmes(id)
+);
+
+
+
+CLINICA:
+
+CREATE TABLE pacientes(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	telefone VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE medicos(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	telefone VARCHAR(15) NOT NULL,
+	cpf VARCHAR(11) NOT NULL UNIQUE
+);
+
+CREATE TABLE consultas(
+	id SERIAL PRIMARY KEY,
+	id_medico INT NOT NULL,
+	CONSTRAINT fk_medico_consulta
+	FOREIGN KEY (id_medico)
+	REFERENCES medicos(id),
+	id_paciente INT NOT NULL,
+	CONSTRAINT fk_paciente_consulta
+	FOREIGN KEY (id_paciente)
+	REFERENCES pacientes(id)
+);
+
+
+
+
+ACADEMIA:
+
+CREATE TABLE professores(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	cref VARCHAR(20) NOT NULL UNIQUE,
+	telefone VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE alunos(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	telefone VARCHAR(20) NOT NULL,
+	id_professor INT NOT NULL,
+	CONSTRAINT fk_professor_alunos
+	FOREIGN KEY (id_professor)
+	REFERENCES professores(id)
+);
+
+
+
+BIBLIOTECA:
+
+CREATE TABLE livro (
+	id SERIAL PRIMARY KEY,
+	titulo VARCHAR(50) NOT NULL,
+	ano_publicacao INT NOT NULL
+);
+
+CREATE TABLE autor(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR (50) NOT NULL,
+	nacionalidade VARCHAR (50) NOT NULL
+);
+
+CREATE TABLE autoria (
+	id SERIAL PRIMARY KEY,
+	livro_id INT NOT NULL,
+	FOREIGN KEY (livro_id)
+	REFERENCES livro(id),
+	autor_id INT NOT NULL,
+	FOREIGN KEY (autor_id)
+	REFERENCES autor(id)
+);
+
+
+
+
+
+

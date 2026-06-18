@@ -1,0 +1,27 @@
+HOTEL
+
+CREATE TABLE cliente (
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	data_nascimento DATE NOT NULL,
+	cpf VARCHAR (11) UNIQUE NOT NULL
+);
+
+CREATE TABLE quarto (
+	id SERIAL PRIMARY KEY,
+	andar_do_quarto VARCHAR(7) NOT NULL,
+	numero_do_quarto VARCHAR(5) NOT NULL
+	
+);
+
+CREATE TABLE reserva (
+	id SERIAL PRIMARY KEY,
+	id_cliente INT NOT NULL,
+	FOREIGN KEY (id_cliente)
+	REFERENCES cliente(id),
+	id_quarto INT NOT NULL,
+	FOREIGN KEY (id_quarto)
+	REFERENCES quarto(id)
+	
+);
+
