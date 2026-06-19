@@ -1,0 +1,95 @@
+EXERCICIO 1:
+
+INSERT INTO professores(nome, email)
+VALUES
+('João Carlos', 'joaocarlos57@gmail.com'),
+('Pedro Henrique', 'pedrohenriqueX9@gmail.com'),
+('Jonas Ferreira', 'jonasferreira@gmail.com'),
+('Gabriel Almeida', 'gabrielalmeida@gmail.com'),
+('Lucas Sena', 'lucassena@gmail.com');
+
+SELECT * FROM professores;
+
+EXERCICIO 2:
+
+INSERT INTO disciplinas(nome, id_turma)
+VALUES
+('programacao', 1),
+('informatica', 2),
+('JAVA', 3),
+('JAVASCRIPT', 1),
+('SQL', 3);
+
+SELECT nome FROM disciplinas;
+
+EXERCICIO 3:
+
+Turmas:
+
+INSERT INTO turmas(turma)
+VALUES
+    ('TDS Manhã'),
+    ('TDS Tarde'),
+	('TDS Noite');
+
+SELECT * FROM turmas;
+
+
+Cursos:
+
+INSERT INTO cursos(nome, id_turma)
+VALUES
+('programacao', 1),
+('informatica', 2),
+('SQL', 3);
+
+SELECT nome FROM cursos;
+
+
+Alunos:
+
+
+INSERT INTO alunos(nome, email)
+VALUES
+('Jõao Henrique', 'joaohenrique@hotmail.com'),
+('Gustavo Brito', 'gustavobrito@hotmail.com'),
+('Deividi Silva', 'deividisilva@hotmail.com'),
+('Alexandre Andrade', 'alexandreandrade@hotmail.com'),
+('Eduarda Duane', 'dudinhalinda@hotmail.com')
+
+SELECT * FROM alunos;
+
+
+DESAFIO:
+
+CREATE TABLE clientes(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE pedidos(
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	data_pedido DATE NOT NULL,
+	id_cliente INT,
+	CONSTRAINT fk_clientes_pedidos
+	FOREIGN KEY (id_cliente) REFERENCES clientes(id)
+);
+
+INSERT INTO clientes(nome)
+VALUES
+('Carlos Henrique'),
+('Diogo Castro'),
+('Rodolrfo NoRespira');
+
+SELECT * FROM clientes;
+
+INSERT INTO pedidos(nome, data_pedido, id_cliente)
+VALUES
+('carne de panela', '2026-03-21', 1),
+('arroz', '2025-06-30', 2),
+('feijao', '2026-05-17', 3),
+('farinha duvidosa', '2024-09-12', 3),
+('ervas duvidosas', '2025-04-29', 1);
+
+SELECT * FROM pedidos;
