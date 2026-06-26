@@ -1,0 +1,281 @@
+/*
+-- ============================================
+-- TABELA: categoria
+-- ============================================
+CREATE TABLE categoria (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);
+
+-- ============================================
+-- TABELA: produto
+-- ============================================
+CREATE TABLE produto (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    estoque INT NOT NULL,
+    categoria_id INT,
+    CONSTRAINT fk_produto_categoria
+        FOREIGN KEY (categoria_id)
+        REFERENCES categoria(id)
+);
+
+-- ============================================
+-- TABELA: cliente
+-- ============================================
+CREATE TABLE cliente (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    cidade VARCHAR(100) NOT NULL
+);
+
+-- ============================================
+-- TABELA: pedido
+-- ============================================
+CREATE TABLE pedido (
+    id SERIAL PRIMARY KEY,
+    data_pedido DATE NOT NULL,
+    valor_total DECIMAL(10,2) NOT NULL,
+    status VARCHAR(30) NOT NULL,
+    cliente_id INT,
+    CONSTRAINT fk_pedido_cliente
+        FOREIGN KEY (cliente_id)
+        REFERENCES cliente(id)
+);
+
+
+INSERT INTO categoria (nome) VALUES
+('Informática'),
+('Periféricos'),
+('Games'),
+('Escritório');
+
+INSERT INTO produto (nome, preco, estoque, categoria_id) VALUES
+('Notebook Dell Inspiron', 3500.00, 8, 1),
+('Mouse Gamer Redragon', 120.00, 25, 2),
+('Teclado Mecânico RGB', 280.00, 12, 2),
+('Monitor LG 24', 899.90, 7, 1),
+('Headset HyperX', 310.00, 10, 3),
+('Cadeira de Escritório', 650.00, 5, 4),
+('Controle Xbox', 399.90, 9, 3),
+('Webcam Full HD', 220.00, 14, 1),
+('Mousepad Speed', 59.90, 30, 3),
+('Impressora Multifuncional', 780.00, 4, 4);
+
+INSERT INTO cliente (nome, email, cidade) VALUES
+('Ana Souza', 'ana@email.com', 'Porto Alegre'),
+('Bruno Lima', 'bruno@email.com', 'São Leopoldo'),
+('Carla Mendes', 'carla@email.com', 'Novo Hamburgo'),
+('Diego Alves', 'diego@email.com', 'Canoas'),
+('Eduarda Silva', 'eduarda@email.com', 'Porto Alegre'),
+('Felipe Costa', 'felipe@email.com', 'Gravataí'),
+('Gabriela Rocha', 'gabriela@email.com', 'São Leopoldo'),
+('Henrique Martins', 'henrique@email.com', 'Cachoeirinha');
+
+INSERT INTO pedido (data_pedido, valor_total, status, cliente_id) VALUES
+('2026-06-01', 3500.00, 'Pendente', 1),
+('2026-06-02', 179.90, 'Pago', 2),
+('2026-06-03', 899.90, 'Enviado', 3),
+('2026-06-05', 650.00, 'Pendente', 4),
+('2026-06-07', 399.90, 'Pago', 5),
+('2026-06-08', 220.00, 'Cancelado', 6),
+('2026-06-10', 310.00, 'Enviado', 7),
+('2026-06-11', 780.00, 'Pago', 8);
+
+*/
+
+
+--EXERCICIO 1
+
+--1.
+
+UPDATE produto
+SET preco = 3699.90
+WHERE id = 1;
+
+--2.
+
+UPDATE produto
+SET preco = 129.90, estoque = 20
+WHERE id = 2;
+
+--3.
+
+UPDATE produto
+SET categoria_id = 2
+WHERE id = 8;
+
+--EXERCICIO 2
+
+--1
+
+UPDATE cliente
+SET cidade = 'Sapucaia do Sul'
+WHERE id = 1;
+
+--2
+
+UPDATE cliente
+SET email = 'bruno.lima@email.com'
+WHERE id = 2;
+
+--3
+
+UPDATE pedido
+SET status = 'Enviado'
+WHERE id = 4;
+
+
+--EXERCICIO 3
+
+--1
+
+DELETE FROM produto
+WHERE id = 9;
+
+--2
+
+DELETE FROM pedido
+WHERE id = 8;
+
+DELETE FROM cliente
+WHERE id = 8;
+
+--3
+
+DELETE FROM pedido
+WHERE id = 6;
+
+--EXERCICIO 4
+
+--1
+
+SELECT * FROM	produto
+WHERE estoque < 10;
+
+--2
+
+SELECT * FROM produto
+WHERE preco > 500;
+
+--3
+
+SELECT * FROM cliente
+WHERE cidade = 'Porto Alegre';
+
+--4
+
+SELECT * FROM pedido
+WHERE status = 'Pago';
+
+--EXERCICIO 5
+
+--1
+
+SELECT * FROM produto
+ORDER BY nome ASC;
+
+--2
+
+SELECT * FROM produto
+ORDER BY preco DESC;
+
+--3
+
+SELECT * FROM cliente
+ORDER BY nome DESC;
+
+--4
+
+SELECT * FROM pedido
+ORDER BY data_pedido ASC;
+
+--EXERCICIO 6
+
+--1
+
+
+SELECT * FROM pedido
+LIMIT 3;
+
+--2
+
+SELECT * FROM cliente
+LIMIT 5;
+
+--3
+
+SELECT * FROM pedido
+ORDER BY valor_total DESC
+LIMIT 2;
+
+--EXERCICIO 7 
+
+--1
+
+SELECT * FROM produto
+WHERE estoque < 15
+ORDER BY estoque DESC;
+
+--2
+
+SELECT * FROM pedido
+WHERE valor_total > 300
+ORDER BY valor_total DESC;
+
+--3
+
+SELECT * FROM produto
+WHERE categoria_id = 1
+ORDER BY nome ASC;
+
+--DESAFIO
+
+SELECT * FROM cliente;
+
+--1
+
+UPDATE produto
+SET preco = 289.90
+WHERE id = 5;
+
+--2
+
+UPDATE produto
+SET estoque = 6
+WHERE id = 10;
+
+--3
+
+UPDATE cliente
+SET cidade = 'São Leopoldo'
+WHERE id = 6;
+
+--4
+
+INSERT INTO pedido (id, data_pedido, valor_total, status, cliente_id) VALUES
+(6, '2026-06-08', 220.00, 'Cancelado', 6);
+
+UPDATE pedido
+SET status = 'Pago'
+WHERE id = 6;
+
+--5
+
+DELETE FROM produto
+WHERE id = 7;
+
+--6
+
+SELECT * FROM produto
+ORDER BY preco DESC;
+
+SELECT * FROM pedido
+WHERE valor_total > 300;
+
+SELECT * FROM cliente
+ORDER BY nome ASC
+LIMIT 5;
+
