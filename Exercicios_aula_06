@@ -1,0 +1,100 @@
+--1 Liste o nome dos clientes e os produtos que eles compraram.
+
+SELECT c.nome AS Cliente, p.nome AS Produto
+FROM clientes c, produtos p, compras co
+WHERE c.id = co.cliente_id
+	AND p.id = co.produto_id;
+	
+--2 Mostre os clientes que compraram mais de 1 unidade de qualquer produto.
+
+SELECT c.nome AS Cliente, p.nome AS Produto, co.quantidade AS Quantidades
+FROM clientes c, produtos p, compras co
+WHERE c.id = co.cliente_id
+	AND p.id = co.produto_id
+	AND co.quantidade >1;
+	
+--3 Liste os produtos da categoria "Eletrônicos" comprados por clientes de Canoas.
+
+SELECT c.nome AS Cliente, c.cidade AS cidade, p.nome AS Produto, p.categoria AS Categoria
+FROM clientes c, produtos p, compras co
+WHERE c.id = co.cliente_id
+	AND c.cidade = 'Canoas'
+	AND p.id = co.produto_id
+	AND p.categoria = 'Eletrônicos';
+	
+--4 Mostre os clientes que compraram "Gamepad 54".
+
+SELECT c.nome AS Cliente, p.nome AS Produto
+FROM clientes c, produtos p, compras co
+WHERE c.id = co.cliente_id
+	AND p.id = co.produto_id
+	AND p.nome = 'Gamepad 54';
+
+--5 Liste todos os clientes que já compraram "Notebook".
+
+
+SELECT c.nome AS Cliente, p.nome AS Produto
+FROM clientes c, produtos p, compras co
+WHERE c.id = co.cliente_id
+	AND p.id = co.produto_id
+	AND p.nome LIKE '%Notebook%';
+	
+--6 Mostre os nomes dos clientes e os preços dos produtos comprados acima de R$ 1500.
+
+SELECT c.nome AS Cliente, p.nome AS Produto, p.preco AS Preco
+FROM clientes c, produtos p, compras co
+WHERE c.id = co.cliente_id
+	AND p.id = co.produto_id
+	AND p.preco > 1500;
+	
+--7 Liste clientes de Salvador que compraram produtos da categoria "Informática".
+
+SELECT c.nome AS Cliente, c.cidade AS cidade, p.nome AS Produto, p.categoria AS Categoria
+FROM clientes c, produtos p, compras co
+WHERE c.id = co.cliente_id
+	AND c.cidade = 'Salvador'
+	AND p.id = co.produto_id
+	AND p.categoria = 'Informática';
+	
+--8 Mostre todos os produtos que a cliente "Ana Fernandes" já comprou.
+
+SELECT c.nome AS Cliente, p.nome AS Produto
+FROM clientes c, produtos p, compras co
+WHERE c.id = co.cliente_id
+	AND p.id = co.produto_id
+	AND c.nome = 'Ana Fernandes';
+	
+--9 Liste todos os clientes que compraram produtos cujo nome começa com "Camiseta".
+
+SELECT c.nome AS Cliente, p.nome AS Produto
+FROM clientes c, produtos p, compras co
+WHERE c.id = co.cliente_id
+	AND p.id = co.produto_id
+	AND p.nome LIKE '%Camiseta%';
+
+--10 Mostre todos os clientes e produtos comprados em fevereiro de 2025.
+
+SELECT c.nome AS Cliente, p.nome AS Produto
+FROM clientes c, produtos p, compras co
+WHERE c.id = co.cliente_id
+	AND p.id = co.produto_id
+	AND co.data_compra BETWEEN '2025-02-01' AND '2025-02-28';
+
+--Desafio Extra
+/*
+Monte uma consulta que mostre:
+
+nome do cliente
+nome do produto
+quantidade comprada
+preço do produto
+valor total da compra (quantidade * preco)
+Ordene do maior valor total para o menor. */
+
+SELECT c.nome AS Cliente, p.nome AS Produto, co.quantidade AS Quatidade, p.preco AS Preco, (co.quantidade * p.preco) AS valor_total
+FROM clientes c, produtos p, compras co
+WHERE c.id = co.cliente_id
+	AND p.id = co.produto_id
+	AND co.quantidade > 0
+	AND p.preco > 0 
+	ORDER BY valor_total DESC;
