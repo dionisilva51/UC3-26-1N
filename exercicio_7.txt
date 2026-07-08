@@ -1,0 +1,115 @@
+--1 Lista o nome dos clientes e os produtos adquiridos utilizando INNER JOIN.
+
+SELECT c.nome AS Clientes, p.nome AS Produtos
+FROM clientes c
+INNER JOIN compras co
+ON c.id = co.cliente_id
+INNER JOIN produtos p
+ON p.id = co.produto_id;
+
+--2 Divulgue os clientes e os dados das compras.
+
+SELECT c.nome, co.data_compra, p.nome AS Produtos, co.quantidade, p.preco
+FROM clientes c
+INNER JOIN compras co
+ON c.id = co.cliente_id
+INNER JOIN produtos p
+ON p.id = co.Produto_id;
+
+--3 Lista apenas os produtos da categoria Informática comprados pelos clientes.
+
+SELECT c.nome, p.nome AS produtos_informatica
+FROM clientes c
+INNER JOIN compras co
+ON c.id = co.cliente_id
+INNER JOIN produtos p
+ON p.id = co.Produto_id
+WHERE p.categoria = 'Informática';
+
+--4 Mostre os clientes que compraram produtos acima de R$ 500.
+
+SELECT c.nome, p.nome, p.preco
+FROM clientes c
+INNER JOIN compras co
+ON c.id = co.cliente_id
+INNER JOIN produtos p
+ON p.id = co.Produto_id
+WHERE p.preco > 500;
+
+--5 Liste todos os clientes utilizando LEFT JOIN, mostrando suas compras (caso existam).
+
+SELECT c.nome, co.data_compra
+FROM clientes c
+LEFT JOIN compras co
+ON c.id = co.cliente_id;
+
+--6 Cadastre um novo cliente sem compras e utilize LEFT JOIN para verificar o resultado.
+
+INSERT INTO clientes(nome, idade, cidade)
+VALUES ('Pedro Fagundes', 43, 'Bento Gonçalves');
+
+SELECT c.nome, co.data_compra
+FROM clientes c
+LEFT JOIN compras co
+ON c.id = co.cliente_id;
+
+--7 Mostre apenas os clientes que ainda não realizaram compras.
+
+SELECT c.nome, co.data_compra
+FROM clientes c
+LEFT JOIN compras co
+ON c.id = co.cliente_id
+WHERE co.id IS NULL;
+
+--8 Faça uma consulta utilizando RIGHT JOIN retornando todas as compras e seus respectivos clientes.
+
+SELECT c.nome AS Clientes, p.nome AS Produtos
+FROM compras co
+RIGHT JOIN clientes c
+ON c.id = co.cliente_id
+RIGHT JOIN produtos p
+ON p.id = co.produto_id;
+
+--9 Lista cliente, produto, quantidade e preço utilizando INNER JOIN.
+
+SELECT c.nome, p.nome AS Produtos, co.quantidade, p.preco
+FROM clientes c
+INNER JOIN compras co
+ON c.id = co.cliente_id
+INNER JOIN produtos p
+ON p.id = co.produto_id;
+
+--10  Lista todas as compras realizadas em fevereiro de 2025
+
+SELECT p.nome AS produtos, co.data_compra
+FROM produtos p
+INNER JOIN compras co
+ON p.id = co.produto_id
+WHERE co.data_compra > '2025-01-31' AND co.data_compra < '2025-03-01';
+
+-- DESAFIO
+/*
+Monte uma consulta que exiba:
+
+Nome do cliente;
+Cidade;
+Nome do produto;
+Categoria;
+Quantidade comprada;
+Preço unitário;
+Valor total da compra ( quantidade × preço);
+Data da compra.
+Requisitos:
+
+Utilize apenas INNER JOIN;
+Ordene pelo valor total da compra em ordem decrescente;
+Em caso de empate, ordene pelo nome do cliente em ordem alfabética.
+*/
+
+SELECT c.nome AS Nome_cliente, c.cidade, p.nome AS Nome_produto, p.categoria, co.quantidade,
+p.preco AS preco_unitario, co.data_compra, p.preco * co.quantidade AS Valor_total
+FROM clientes c
+INNER JOIN compras co
+ON c.id = co.cliente_id
+INNER JOIN produtos p
+ON p.id = co.produto_id
