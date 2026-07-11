@@ -1,0 +1,134 @@
+--1 Conte quantos clientes existem cadastrados.
+
+SELECT COUNT(*) AS total_clientes
+FROM clientes;
+
+--2 Conte quantos produtos existem na categoria Eletrônicos .
+
+SELECT COUNT(*) AS total_produtos
+FROM produtos;
+
+--3 Calcule o preço médio de todos os produtos.
+
+SELECT AVG(preco) AS preco_medio
+FROM produtos;
+
+--4 Mostre o produto mais caro e o mais barato.
+
+
+SELECT MIN(preco), MAX(preco)
+FROM produtos;
+
+
+--5 Liste a quantidade de clientes por cidade.
+
+SELECT cidade, 
+COUNT(*) AS total_clientes
+FROM clientes
+GROUP BY cidade;
+
+--6 Lista o preço médio dos produtos por categoria.
+
+SELECT categoria, AVG(preco) AS preco_medio
+FROM produtos
+GROUP BY categoria;
+
+--7 Mostre quanto cada cliente gastou no total.
+
+SELECT c.nome, SUM(co.quantidade * p.preco) AS total_gasto
+FROM clientes c
+INNER JOIN compras co
+ON c.id = co.cliente_id
+INNER JOIN produtos p
+ON p.id = co.produto_id
+GROUP BY c.nome;
+
+--8 Liste apenas os clientes que gastaram mais de R$ 3.000 .
+
+SELECT c.nome, SUM(co.quantidade * p.preco) AS total
+FROM clientes c
+INNER JOIN compras co
+ON c.id = co.cliente_id
+INNER JOIN produtos p
+ON p.id = co.produto_id
+GROUP BY c.nome
+HAVING SUM(co.quantidade * p.preco) > 3000;
+
+--9 Encontre o(s) produto(s) com o maior preço utilizando uma subconsulta.
+
+SELECT * FROM produtos
+WHERE preco = (SELECT MAX(preco)
+FROM produtos
+);
+
+--10 Liste os clientes que adquiriram algum produto da categoria Informática utilizando uma subconsulta.
+
+
+SELECT nome FROM clientes 
+WHERE id IN (SELECT cliente_id
+			FROM compras
+			 WHERE produto_id IN (SELECT id FROM produtos 
+						  WHERE categoria = 'Informática')
+			);
+			
+
+--11 Mostre os clientes que nunca realizaram compras utilizando NOT EXISTS.
+
+SELECT nome
+FROM clientes c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM compras co
+    WHERE co.cliente_id = c.id
+);
+
+--12 Exiba as categorias cujo preço médio dos produtos seja superior a R$ 500.
+
+SELECT p.categoria, ROUND(AVG(preco), 2) AS preco_medio
+FROM produtos p
+GROUP BY categoria
+HAVING AVG(preco) > 500;
+
+/* DESAFIO
+
+Monte uma consulta que exiba:
+
+Nome do cliente;
+Cidade;
+Quantidade de compras realizadas;
+Quantidade total de itens comprados;
+Valor total gasto;
+Valor médio gasto por compra;
+Produto mais caro comprado pelo cliente.
+Requisitos
+Utilize INNER JOIN;
+Utilize pelo menos três funções de agregação;
+Utilize GROUP BY;
+Utilize HAVING para mostrar apenas clientes que gastaram mais de R$ 2.000;
+Utilize uma subconsulta para encontrar o produto mais caro comprado por cada cliente;
+Ordene pelo valor total gasto em ordem decrescente. */
+
+SELECT 
+    c.nome AS cliente,
+    c.cidade,
+    COUNT(co.id) AS qtd_compras,
+    SUM(co.quantidade) AS total_itens,
+    SUM(co.quantidade * p.preco) AS valor_total_gasto,
+    ROUND(AVG(co.quantidade * p.preco), 2) AS media_por_compra,
+    (
+        SELECT prod.nome 
+        FROM compras comp
+        INNER JOIN produtos prod ON prod.id = comp.produto_id
+        WHERE comp.cliente_id = c.id
+        ORDER BY prod.preco DESC
+        LIMIT 1
+    ) AS produto_mais_caro_comprado
+FROM clientes c
+INNER JOIN compras co ON c.id = co.cliente_id
+INNER JOIN produtos p ON p.id = co.produto_id
+GROUP BY c.id, c.nome, c.cidade
+HAVING SUM(co.quantidade * p.preco) > 2000
+ORDER BY valor_total_gasto DESC;
+
+
+
