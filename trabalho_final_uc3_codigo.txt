@@ -1,0 +1,126 @@
+CREATE TABLE equipes (
+	id SERIAL PRIMARY KEY,
+	nome_equipe VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE jogadores (
+	id SERIAL PRIMARY KEY,
+	nome_jogador VARCHAR(70) NOT NULL,
+	
+	id_equipe INT,
+	CONSTRAINT fk_equipe_jogador
+	FOREIGN KEY (id_equipe)
+	REFERENCES equipes(id)
+);
+
+CREATE TABLE campeonato (
+	id SERIAL PRIMARY KEY,
+	nome_campeonato VARCHAR(100) NOT NULL,
+	data_campeonato DATE NOT NULL
+);
+
+CREATE TABLE jogo (
+	id SERIAL PRIMARY KEY,
+	nome_jogo VARCHAR(100) NOT NULL,
+	genero_jogo VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE partida (
+	id SERIAL PRIMARY KEY,
+	data_partida DATE NOT NULL,
+	
+	id_jogo INT,
+	
+	CONSTRAINT fk_partida_jogo
+	FOREIGN KEY (id_jogo)
+	REFERENCES  jogo(id),
+	
+	id_campeonato INT,
+	
+	CONSTRAINT fk_partida_campeonato
+	FOREIGN KEY (id_campeonato)
+	REFERENCES campeonato(id)
+	
+);
+
+CREATE TABLE participacao (
+	id SERIAL PRIMARY KEY,
+	pontuacao INT NOT NULL,
+	
+	id_jogador INT,
+	
+	CONSTRAINT fk_participacao_jogogador
+	FOREIGN KEY (id_jogador)
+	REFERENCES jogadores(id),
+	
+	id_partida INT,
+	
+	CONSTRAINT fk_participacao_partida
+	FOREIGN KEY (id_partida)
+	REFERENCES partida(id),
+	
+	rodada VARCHAR(50)
+);
+
+
+INSERT INTO jogo (nome_jogo, genero_jogo)
+VALUES ('Mario Cart', 'corrida'),
+('Stret Fight', 'Luta'),
+('Bomberman', 'Explosoes'),
+('Mortal Combat', 'Luta');
+
+INSERT INTO equipes (nome_equipe)
+VALUES ('Select Players'),
+('Codex Tro'),
+('Bombinhas'),
+('EmanuGO!'),
+('Soh Rezenha'),
+('SQL Power');
+
+INSERT INTO jogadores (nome_jogador, id_equipe)
+VALUES ('Vinicius', 1),
+('Silvio', 1),
+('Bruno Rosa', 1),
+('Dionatan', 1),
+('Will', 2),
+('Bruno', 2),
+('Tomas', 2),
+('Loran', 3),
+('Vitor', 3),
+('Arthur', 3),
+('Antoni', 4),
+('Emanuel', 4),
+('Erick EmanuGO', 4),
+('Alisson', 5),
+('Bianca', 5),
+('Marcia', 5),
+('Ju', 5),
+('Rafael F.', 6),
+('Rafael R.', 6),
+('Erick Fernado', 6),
+('Wellington', 6);
+
+INSERT INTO campeonato(nome_campeonato, data_campeonato)
+VALUES ('Campeonato Mario Cart', '2026-07-13'),
+('Campeonato Stret Fight', '2026-07-14'),
+('Campeonato Bomberman', '2026-07-14'),
+('Campeonato Mortal Combat', '2026-07-15');
+
+INSERT INTO partida (data_partida, id_jogo, id_campeonato, rodada)
+VALUES ('2026-07-13', 1, 1, 'Fase de grupos'),
+('2026-07-13', 1, 1, 'Fase de grupos'),
+('2026-07-13', 1, 1, 'Fase de grupos'),
+('2026-07-14', 1, 1, 'Fase de grupos'),
+('2026-07-14', 1, 1, 'Fase de grupos'),
+('2026-07-14', 1, 1, 'Fase de grupos'),
+('2026-07-14', 1, 1, 'Fase de grupos'),
+('2026-07-14', 1, 1, 'Fase de grupos'),
+('2026-07-14', 1, 1, 'Fase de grupos');
+
+INSERT INTO partida (data_partida, id_jogo, id_campeonato, rodada)
+VALUES ('2026-07-14', 1, 1, 'Semi final'),
+('2026-07-14', 1, 1, 'Semi final'),
+('2026-07-14', 1, 1, 'final')
+
+SELECT * FROM partida;
+SELECT * FROM equipes;
